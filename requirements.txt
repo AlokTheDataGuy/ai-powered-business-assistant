@@ -10,3 +10,5 @@ uvicorn[standard]
 python-dotenv
 pydantic
 tqdm
+sentence-transformers
+python-multipart

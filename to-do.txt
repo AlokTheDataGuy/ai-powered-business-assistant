@@ -1,0 +1,7 @@
+1. To Avoid:
+- Very large PDFs (>500 pages) or scanned/image-based PDFs (harder for extraction).
+- Non-business docs (research papers from arXiv are okay for general testing but not ideal for "business insights").
+
+2. Add page no. in the result.
+
+3. 
