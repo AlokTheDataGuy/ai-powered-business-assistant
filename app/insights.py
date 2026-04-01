@@ -2,44 +2,23 @@
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from app.retrieve import get_retriever
-
-LLM_MODEL = "llama3.1:8b"
+from config import LLM_MODEL, DEVICE
 
 def generate_insights():
-    """
-    Generates a short summary + key business insights from all documents.
-    Perfect for your single-file future use.
-    """
-    retriever = get_retriever(k=8)   # more context for insights
-    
-    llm = ChatOllama(model=LLM_MODEL, temperature=0.2)
+    retriever = get_retriever(k=8)
+    llm = ChatOllama(model=LLM_MODEL, temperature=0.2, device=DEVICE if DEVICE == "cuda" else None)
 
-    prompt = ChatPromptTemplate.from_template("""You are a senior business analyst.
-Provide a clear, short response with bullet points.
-
-1. One-paragraph overall summary of the document(s).
-2. Key insights in these categories:
-   - Top revenue segments / financial highlights
-   - Major risks or challenges mentioned
-   - Key opportunities or strategic points
+    prompt = ChatPromptTemplate.from_template("""Check if the context is a company/enterprise business document.
+If not, reply ONLY: "Please upload a company or enterprise-related document (annual report, financial statement, business plan, etc.)."
+Otherwise, give:
+1. One-paragraph summary
+2. Bullet points: Top revenue/financial highlights, Major risks, Key opportunities
 
 Context:
-{context}
+{context}""")
 
-Answer in simple business language:""")
-
-    # Get context
     context_docs = retriever.invoke("Summarize the entire document")
     context = "\n\n".join(doc.page_content for doc in context_docs)
 
-    chain = prompt | llm
-    response = chain.invoke({"context": context})
-
-    print("📊 INSIGHTS GENERATED")
-    print(response.content)
+    response = (prompt | llm).invoke({"context": context})
     return response.content
-
-
-# Quick test
-if __name__ == "__main__":
-    generate_insights()

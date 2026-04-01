@@ -4,26 +4,17 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from app.retrieve import get_retriever
-
-# LLM Setup (free & local)
-LLM_MODEL = "llama3.1:8b"   # Change to "phi4:3.8b" if your laptop is slower
+from config import LLM_MODEL, DEVICE
 
 def get_rag_chain():
-    """
-    Creates a simple RAG chain: query → retrieve chunks → LLM answer
-    """
     retriever = get_retriever(k=6)
+    llm = ChatOllama(model=LLM_MODEL, temperature=0.3, device=DEVICE if DEVICE == "cuda" else None)
 
-    llm = ChatOllama(
-        model=LLM_MODEL,
-        temperature=0.3,        # low temperature = more factual
-        num_predict=1024
-    )
-
-    # Business-friendly prompt
-    template = """You are a helpful business analyst.
-Answer the question using ONLY the provided context.
-If you don't know, say "I don't have enough information."
+    # Validation + Answer prompt
+    template = """You are a business analyst.
+First, check if the question is relevant to company/enterprise documents.
+If the question is vague, unrelated, or not about business (revenue, risks, strategy, etc.), reply ONLY with: "Please ask a relevant business question about the company document."
+Otherwise, answer using ONLY the context.
 
 Context:
 {context}
@@ -43,17 +34,4 @@ Answer:"""
         | llm
         | StrOutputParser()
     )
-
     return chain
-
-
-# Quick test
-if __name__ == "__main__":
-    chain = get_rag_chain()
-    
-    test_query = "What is the main topic or summary of the document?"
-    print(f"\n🔍 Asking: {test_query}")
-    print("-" * 60)
-    
-    answer = chain.invoke(test_query)
-    print(answer)
