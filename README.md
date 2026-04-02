@@ -8,7 +8,8 @@ Built for **business analysts, founders, and teams** who want to chat with annua
 
 ## 📸 Screenshot
 
-![Business Document Assistant UI](./screenshot.png)
+![Business Document Assistant](./screenshots/question.png)
+![Insights Generation](./screenshots/insights.png)
 
 ---
 
@@ -71,7 +72,7 @@ rag-system/
 - Run in terminal:
 
 ```bash
-ollama pull llama3.3:8b
+ollama pull llama3.1:8b
 ```
 
 > Or `ollama pull phi4:3.8b` if your laptop is lighter.

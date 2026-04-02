@@ -8,13 +8,20 @@ from config import LLM_MODEL, DEVICE
 
 def get_rag_chain():
     retriever = get_retriever(k=6)
-    llm = ChatOllama(model=LLM_MODEL, temperature=0.3, device=DEVICE if DEVICE == "cuda" else None)
 
-    # Validation + Answer prompt
-    template = """You are a business analyst.
-First, check if the question is relevant to company/enterprise documents.
-If the question is vague, unrelated, or not about business (revenue, risks, strategy, etc.), reply ONLY with: "Please ask a relevant business question about the company document."
-Otherwise, answer using ONLY the context.
+    try:
+        llm = ChatOllama(
+            model=LLM_MODEL,
+            temperature=0.3,
+            device=DEVICE if DEVICE == "cuda" else None
+        )
+    except Exception as e:
+        raise RuntimeError(f"❌ Ollama is not running or model '{LLM_MODEL}' is not loaded.\n"
+                           f"   Please run 'ollama serve' in a new terminal and 'ollama pull {LLM_MODEL}'")
+
+    template = """You are a helpful business analyst.
+Answer using ONLY the context below.
+If the question is not relevant to business documents, reply: "Please ask a relevant business question about the company document."
 
 Context:
 {context}
