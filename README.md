@@ -278,9 +278,9 @@ MIT — use it, modify it, ship it.
 
 ## 👤 Author
 
-Built by **[Your Name]** — exploring the intersection of NLP, RAG, and practical business tooling.
+Built by **Alok Deep** — exploring the intersection of NLP, RAG, and practical business tooling.
 
-[LinkedIn](https://linkedin.com/in/your-handle) · [Portfolio](https://your-site.com) · [Email](mailto:you@example.com)
+[LinkedIn](www.linkedin.com/in/alokthedataguy) · [Portfolio](https://alok-deep.vercel.app/) · [Email](alokdeep9925@gmail.com)
 
 ---
 
