@@ -10,7 +10,7 @@ Built for **analysts, founders, and compliance-bound teams** who need to extract
 [![Groq](https://img.shields.io/badge/Groq-Cloud%20Mode-red)](https://groq.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-🌐 **[Live Demo](https://your-demo-url.vercel.app)** · 📺 **[Demo Video](https://your-loom-url.com)** · 📂 **[GitHub](https://github.com/your-username/docsense)**
+ 📂 **[GitHub](https://github.com/AlokTheDataGuy/DocSense-Privacy-First-RAG-for-Enterprise-Documents)**
 
 | Q&A Interface | Auto-Generated Insights |
 |---------------|--------------------------|
